@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const {check} = require("express-validator");
 
-const {signout,signup, signin, isSignedIn}= require('../controllers/auth')
+const {signout,signup, signin, isSignedIn, addCart, getAllOrders}= require('../controllers/auth')
 
 router.post("/signin",[
     check("email","Enter a valid email").isEmail(),
@@ -19,8 +19,10 @@ router.post("/signup",[
 
 router.get("/signout",signout)
 
-router.get("/testroute",isSignedIn,(req,res)=>{
-    res.send("A protected signed IN")
-})
+router.post("/addCart",isSignedIn,addCart); 
+
+router.post("/warden",isSignedIn,getAllOrders);
+
+router.post("/checkID",isSignedIn,getAllOrders);
 
 module.exports = router
